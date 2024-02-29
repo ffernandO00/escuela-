@@ -1,0 +1,50 @@
+///////app.controller.ts 
+
+import { Controller, Get, Post, Param } from '@nestjs/common';
+import { AppService } from './app.service';
+
+@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get('hello')
+  getHello(): string {
+    return this.appService.getHello();
+  }
+
+  @Get('gretting')
+  getGretting(): string {
+    return this.appService.getGretting();
+  }
+
+  @Post('/suma/:sumando1/:sumando2')
+getResultado(
+  @Param('sumando1') sumando1: number,
+  @Param('sumando2') sumando2: number,
+): number {
+  const num1 = +sumando1; 
+  const num2 = +sumando2;
+  return this.appService.sumar(sumando1,sumando2) ;
+}
+}
+
+////////app.service.ts 
+
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class AppService {
+  getHello(): string {
+    return 'PROBANDO UNA FUNCION';
+  }
+
+  getGretting(): string {
+    return 'PROBANDO LA FUNCION GRETTING '   
+  }
+
+  sumar(operador1, operador2): number{
+    let resultado = 0;
+    resultado = parseInt(operador1) + parseInt(operador2);
+    return resultado;
+  }
+}
